@@ -2,8 +2,8 @@
 
 
 
-BOARD = uno
-# mega2560
+BOARD = mega2560
+# uno
 # OBJECTS += BMP085/BMP085.o
 include ./arduino.mk 
 
