@@ -5,16 +5,18 @@
 
 // byte _addr = 0x4b;
 
-#define SUPPLY_SENS TC74A3
-#define RETURN_SENS TC74A0
+#define SUPPLY_SENS TC74A0
+#define RETURN_SENS TC74A3
 #define THRESH 5 //minimum difference between supply and return in deg f
 #define BOILER_CONTROL_PIN 8 //set pin to high to disable boiler
 #define MINIMUM_CYCLE_TIME 60 //in sec
+#define ANALOG_TMP36_PORT A0
 
 //fwd declarations
 int getTempInC(byte addr);
 float c2f(float f);
 float getTempInF(byte addr);
+float readTMP36TempInC(int sensorPin);
 
 void setup() {
   Serial.begin(9600);
@@ -25,7 +27,7 @@ void setup() {
 
 void loop() {
 	float supplyTemp = getTempInF(SUPPLY_SENS);
-	float returnTemp = getTempInF(RETURN_SENS);
+	float returnTemp = c2f(readTMP36TempInC(ANALOG_TMP36_PORT));//getTempInF(RETURN_SENS);
 
 	Serial.print(micros());
 	Serial.print("  | ");
@@ -72,9 +74,7 @@ int getTempInC(byte addr)
 
 float c2f(float f)
 {
-	float _temp = f*9.0;
-	_temp /= 5;
-	_temp += 32;
+	float _temp = f*9.0/5.0+32.0;
 	return _temp;
 }
 
@@ -83,4 +83,14 @@ float getTempInF(byte addr)
 	float _temp = getTempInC(addr);
 	_temp = c2f(_temp);
 	return _temp;
+}
+
+float readTMP36TempInC(int sensorPin)
+{
+	int reading = analogRead(sensorPin);
+	reading = analogRead(sensorPin);
+	float voltage = reading * 5.0;
+	voltage /= 1024.0;
+	float temperatureC = (voltage - 0.5) * 100 ;
+	return temperatureC;
 }
