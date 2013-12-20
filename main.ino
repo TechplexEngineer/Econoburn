@@ -5,7 +5,7 @@
 
 // byte _addr = 0x4b;
 
-#define SUPPLY_SENS TC74A3
+#define SUPPLY_SENS TC74A1
 #define RETURN_SENS TC74A0
 #define THRESH 5 //minimum difference between supply and return in deg f
 #define BOILER_CONTROL_PIN 8 //set pin to high to disable boiler

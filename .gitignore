@@ -1,3 +1,5 @@
 .dep/
 .lib/
 *.o
+*.hex
+*.elf
