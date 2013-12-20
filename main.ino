@@ -6,7 +6,7 @@
 // byte _addr = 0x4b;
 
 #define SUPPLY_SENS TC74A0
-#define RETURN_SENS TC74A3
+#define RETURN_SENS TC74A1
 #define THRESH 5 //minimum difference between supply and return in deg f
 #define BOILER_CONTROL_PIN 8 //set pin to high to disable boiler
 #define MINIMUM_CYCLE_TIME 60 //in sec
@@ -27,7 +27,8 @@ void setup() {
 
 void loop() {
 	float supplyTemp = getTempInF(SUPPLY_SENS);
-	float returnTemp = c2f(readTMP36TempInC(ANALOG_TMP36_PORT));//getTempInF(RETURN_SENS);
+	float returnTemp = getTempInF(RETURN_SENS);
+	//c2f(readTMP36TempInC(ANALOG_TMP36_PORT));//getTempInF(RETURN_SENS);
 
 	Serial.print(micros());
 	Serial.print("  | ");
